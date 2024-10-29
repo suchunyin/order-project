@@ -115,7 +115,7 @@ export default {
         getApp().globalData.shoppingBag.amount = 0;
         getApp().globalData.shoppingBag.list = [];
         uni.showToast({ title: res.msg });
-        uni.navigateTo({url:`/pages/orderList/detail?id=${res.res.id}`});
+        uni.redirectTo({url:`/pages/orderList/detail?id=${res.res.id}`});
       });
     },
   },
