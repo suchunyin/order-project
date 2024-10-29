@@ -2,6 +2,7 @@
 node_modules/
 unpackage/
 dist/
+package-lock.json
 
 # local env files
 .env.local
