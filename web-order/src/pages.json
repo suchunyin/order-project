@@ -1,0 +1,93 @@
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+    }
+  },
+  "pages": [
+    {
+      "path": "pages/product/index",
+      "style": {
+        "navigationBarTitleText": "点单",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/home/index",
+      "style": {
+        "navigationBarTitleText": "首页",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/orderList/index",
+      "style": {
+        "navigationBarTitleText": "订单"
+      }
+    },
+    {
+      "path": "pages/mine/index",
+      "style": {
+        "navigationBarTitleText": "我的",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/product/detail",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "pages/product/confirmOrder",
+      "style": {
+        "navigationBarTitleText": "确认订单"
+      }
+    },
+    {
+      "path": "pages/orderList/detail",
+      "style": {
+        "navigationBarTitleText": "订单详情"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#515151",
+    "selectedColor": "#1E48CE",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "iconPath": "static/icon/zhuye.png",
+        "selectedIconPath": "static/icon/zhuye-selected.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/product/index",
+        "iconPath": "static/icon/diancan.png",
+        "selectedIconPath": "static/icon/diancan-selected.png",
+        "text": "点单"
+      },
+      {
+        "pagePath": "pages/orderList/index",
+        "iconPath": "static/icon/dingdan.png",
+        "selectedIconPath": "static/icon/dingdan-selected.png",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "iconPath": "static/icon/wode.png",
+        "selectedIconPath": "static/icon/wode-selected.png",
+        "text": "我的"
+      }
+    ]
+  }
+}
