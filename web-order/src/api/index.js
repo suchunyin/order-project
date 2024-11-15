@@ -4,7 +4,7 @@ const baseUrl = "http://127.0.0.1:3009";
 const apiUrl = baseUrl + "/api";
 
 const getProductList = () => {
-  return request({ url: `${apiUrl}/product/productList` });
+  return request({ url: `${apiUrl}/productType/typeList` });
 };
 
 const getOrderList = ({ id }) => {

@@ -42,7 +42,7 @@
           @click="handleTabChange(item)"
         >
           <template slot="body">
-            <image :src="imageUrl(item.img)"></image>
+            <image :src="imageUrl(item.image)"></image>
           </template>
           <template slot="footer">{{ item.name }} </template>
         </view>

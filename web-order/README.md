@@ -7,7 +7,8 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-<!-- npm run serve -->
+npm run serve
+或
 npm run dev:mp-weixin 编译至微信，运行后打开微信开发者工具导入
 ```
 
