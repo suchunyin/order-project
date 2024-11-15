@@ -1,0 +1,10 @@
+// 基础色调
+$primary-color:#1E48CE;
+$color:#16359b;
+
+// 混合器
+@mixin flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
