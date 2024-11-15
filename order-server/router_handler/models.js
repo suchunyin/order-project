@@ -8,7 +8,7 @@ const productType = DB.define("product_type", {
     autoIncrement: true,
   },
   name: Sequelize.STRING(30),
-  img: Sequelize.STRING(300),
+  image: Sequelize.STRING(300),
   isDeleted: {
     type: Sequelize.TINYINT,
     defaultValue: "0",
@@ -50,13 +50,13 @@ const order = DB.define("order", {
     field: "id",
     autoIncrement: true,
   },
-  orderType: Sequelize.INTEGER,
-  amount: Sequelize.INTEGER,
-  dealNum: Sequelize.INTEGER,
-  code: Sequelize.STRING(100),
-  phone: Sequelize.STRING(300),
-  remark: Sequelize.TEXT,
-  userId: Sequelize.STRING(300),
+  orderType: Sequelize.INTEGER,     //订单类型：1 "自提" , 2 "外卖"
+  amount: Sequelize.INTEGER,        //交易金额
+  dealNum: Sequelize.INTEGER,       //订单数量
+  code: Sequelize.STRING(100),      //取餐码
+  phone: Sequelize.STRING(300),     //客户联系电话
+  remark: Sequelize.TEXT,           //客户备注
+  userId: Sequelize.STRING(300),    //客户id
   product: Sequelize.TEXT,
   isDeleted: {
     type: Sequelize.TINYINT,

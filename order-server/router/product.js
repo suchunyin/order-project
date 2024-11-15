@@ -7,38 +7,46 @@ router.use((req, res, next) => {
   console.log("time:", new Date());
   next();
 });
+
+const { upload, removeImage } = require("../middleware");
+router.post("/uploadImage/:field", upload, (req, res) => {
+  res.json({
+    code: 200,
+    msg: "图片上传成功！",
+    // res: { file: req.file },
+    res: { info: req.params, image: req.image, filename: req.file.filename },
+  });
+});
+router.post("/removeImage", removeImage, (req, res) => {
+  res.json({
+    code: 200,
+    msg: "图片删除成功！",
+  });
+});
+
 // 商品列表查询
 router.get("/product/productList", async (req, res) => {
-  // 查询商品类型、商品
-  let type = await productType.findAll({
-    where: { isDeleted: 0 },
-    raw: true,
-  });
+  // 查询商品
   let productList = await product.findAll({
     where: { isDeleted: 0 },
     raw: true,
   });
-  // 拼接图片路径 转换json
+  // 转换json
   productList = productList.map((v) => {
-    // v.image && (v.image = process.env.baseUrl + v.image);
     v.price = v.price ? JSON.parse(v.price) : v.price;
     v.attribute = v.attribute ? JSON.parse(v.attribute) : v.attribute;
     return v;
   });
-  for (let i = 0; i < type.length; i++) {
-    // 商品 拼接类型
-    type[i].productList = productList.filter((v) => v.typeId == type[i].id);
-    // 拼接图片路径
-    // type[i].img && (type[i].img = process.env.baseUrl + type[i].img);
-  }
   res.json({
     code: 200,
     msg: "",
-    res: type,
+    res: productList,
   });
 });
 // 商品增加
 router.post("/product/add", async (req, res) => {
+  req.body.price = JSON.stringify(req.body.price);
+  req.body.attribute = JSON.stringify(req.body.attribute);
   const ins = await product.create(
     { ...req.body },
     {
@@ -62,7 +70,7 @@ router.post("/product/add", async (req, res) => {
   });
 });
 // 商品删除
-router.post("/product/delete", async (req, res) => {
+router.post("/product/delete", removeImage, async (req, res) => {
   const del = await product.update(
     { isDeleted: 1 },
     { where: { id: req.body.id } }
@@ -77,14 +85,25 @@ router.post("/product/delete", async (req, res) => {
 });
 // 类型查询
 router.get("/productType/typeList", async (req, res) => {
+  // 查询商品类型、商品
   let type = await productType.findAll({
     where: { isDeleted: 0 },
     raw: true,
   });
-  type = type.map((v) => {
-    v.img && (v.img = process.env.baseUrl + v.img);
+  let productList = await product.findAll({
+    where: { isDeleted: 0 },
+    raw: true,
+  });
+  // 转换json
+  productList = productList.map((v) => {
+    v.price = v.price ? JSON.parse(v.price) : v.price;
+    v.attribute = v.attribute ? JSON.parse(v.attribute) : v.attribute;
     return v;
   });
+  for (let i = 0; i < type.length; i++) {
+    // 商品 拼接类型
+    type[i].productList = productList.filter((v) => v.typeId == type[i].id);
+  }
   res.json({
     code: 200,
     msg: "",
@@ -96,7 +115,7 @@ router.post("/productType/add", async (req, res) => {
   const ins = await productType.create(
     { ...req.body },
     {
-      fields: [`name`, `img`],
+      fields: [`name`, `image`],
     }
   );
   res.json({
@@ -106,7 +125,7 @@ router.post("/productType/add", async (req, res) => {
   });
 });
 // 类型删除
-router.post("/productType/delete", async (req, res) => {
+router.post("/productType/delete", removeImage, async (req, res) => {
   const del = await productType.update(
     { isDeleted: 1 },
     { where: { id: req.body.id } }

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { order } = require("../router_handler/models");
-const { isSameDay } = require("../utils/index");
+const { isSameDay } = require("../middleware");
 
 const orderState = (req, res, next) => {
   console.log(res.res);
@@ -11,17 +11,22 @@ const orderState = (req, res, next) => {
 
 // 订单查询
 router.get("/order/orderList", orderState, async (req, res) => {
-  let list = await order.findAll({
-    where: { isDeleted: 0, userId: req.query.id },
-    order: [["id", "DESC"]],
-    raw: true,
-  });
+  let list;
+  if (req.query.role === "admin") {
+    list = await order.findAll({
+      where: { isDeleted: 0 },
+      order: [["id", "DESC"]],
+      raw: true,
+    });
+  } else {
+    list = await order.findAll({
+      where: { isDeleted: 0, userId: req.query.id },
+      order: [["id", "DESC"]],
+      raw: true,
+    });
+  }
   list = list.map((v) => {
     v.product = JSON.parse(v.product || "[]");
-    // v.product.map((c) => {
-    //   c.image && (c.image = process.env.baseUrl + c.image);
-    //   return c;
-    // });
     return v;
   });
 
