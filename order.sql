@@ -703,3 +703,6 @@ VALUES
     20,
     '[{"name":"规格","items":["中杯","大杯"]},{"name":"甜度","items":["全糖","7分糖"]},{"name":"温度","items":["正常冰","少冰"]}]'
   );
+
+UPDATE product SET cover = '/image/recommend/20241205113100.jpg', isRecommend = 1 WHERE id = 203;
+UPDATE product SET cover = '/image/recommend/20241205111811.jpg', isRecommend = 1 WHERE id = 214;

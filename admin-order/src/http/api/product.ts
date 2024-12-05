@@ -45,3 +45,19 @@ export const deleteProduct = async (data: any) => {
   const res = await http.post(`/product/delete`, data);
   return res;
 };
+
+// 查询商品推荐列表
+export const getRecommendList = async () => {
+  const res = await http.get("/recommend/list");
+  return res.res;
+};
+// 新增商品推荐
+export const addRecommend = async (data: any) => {
+  const res = await http.post(`/recommend/add`, data);
+  return res;
+};
+// 删除商品推荐
+export const deleteRecommend = async (data: any) => {
+  const res = await http.post(`/recommend/delete`, data);
+  return res;
+};

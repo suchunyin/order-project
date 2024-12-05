@@ -12,6 +12,14 @@ const routes: Array<RouteRecordRaw> = [
         name: "home",
         meta: { title: "首页推荐", icon: "Star" },
         component: () => import("@/views/home/index.vue"),
+        children: [
+          {
+            path: "/home/addRecommend",
+            name: "addRecommend",
+            meta: { title: "新增推荐" },
+            component: () => import("@/views/home/add.vue"),
+          },
+        ],
       },
       {
         path: "/type",

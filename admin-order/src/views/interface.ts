@@ -49,9 +49,7 @@ export interface orderApi {
   createdAt: string;
   isDeleted?: number;
 }
-export interface recommendApi {
-  id: number;
+export interface recommendApi extends productApi {
   cover: string;
   isRecommend: number;
-  isDeleted?: number;
 }
