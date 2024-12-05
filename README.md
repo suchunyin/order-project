@@ -15,7 +15,7 @@
 -后端：`nodejs + express + mysql + sequelize`
 
 ## 运行
-见order-server/README.md, web-order/README.md
+见`order-server/README.md`, `web-order/README.md`, `admin-order/README.md`
 
 ### 注意！！！
 电脑上必须安装了mysql，并且mysql的相关配置如下才能进行正常运行。
@@ -29,11 +29,11 @@
     商品展示、加入购物袋、订单结算、订单展示、订单详情
 
 前端-管理系统：
-    类目管理、发布类目、商品管理、发布商品、订单管理、订单详情
+    首页推荐管理、发布推荐、类目管理、发布类目、商品管理、发布商品、订单管理、订单详情
         实现上传图片公共组件、使用vue-router页面路由管理，封装axios请求
 
 后端：
-    上传图片、商品分类列表(增删改查)、商品列表(增删改查)、订单列表(增删改查)
+    上传图片、首页推荐列表(增删改查)、商品分类列表(增删改查)、商品列表(增删改查)、订单列表(增删改查)
 
 ## 项目结构
 ```
@@ -67,7 +67,7 @@
 │       ├─assets          // 静态文件
 │       ├─components      // 全局公用组件
 │       ├─http            // 封装axios请求
-│       │  ├─api          // 接口方法
+│       │  └─api          // 接口方法
 │       ├─layout          // 页面布局
 │       ├─router          // 路由配置
 │       ├─store           // vuex存储配置
