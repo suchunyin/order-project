@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, reactive } from "vue";
+import { ref, onMounted, computed, reactive, nextTick } from "vue";
 import { updateInfo } from "@/http/api/user";
 import { ElMessage } from "element-plus";
 import { useStore } from "vuex";
@@ -37,7 +37,6 @@ const handleEdit = (item: any) => {
   item.edit = true;
 };
 const handleSave = (prop: any, item) => {
-  console.log(userInfo[item.prop]);
   let params = {};
   if (prop !== "time") params[prop] = item[prop];
   else
@@ -46,9 +45,12 @@ const handleSave = (prop: any, item) => {
       closingTime: item.closingTime,
     };
   updateInfo(params).then((res) => {
+    if (prop == "avatar") isLogoSubmit.value = true;
     ElMessage.success(res.msg || "保存成功");
     store.dispatch("UserInfo");
-    item.edit = false;
+    nextTick(() => {
+      item.edit = false;
+    });
   });
 };
 onMounted(() => {});
