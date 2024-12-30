@@ -1,4 +1,7 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import { ElMessage } from "element-plus";
+import store from "../store";
+import { useRouter } from "vue-router";
 
 interface ResType<T> {
   code: number;
@@ -15,16 +18,39 @@ interface Http {
 axios.defaults.baseURL = "/api";
 axios.defaults.timeout = 120 * 1000;
 // const imgBase = "/toimage";
+const router = useRouter();
+
+// 请求拦截
+axios.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    const token = store.getters.token;
+    if (token) {
+      config.headers["Authorization"] = "Bearer " + token;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 // 响应拦截
-axios.interceptors.response.use((res: AxiosResponse) => {
-  switch (res.status) {
-    case 200:
-      return res.data;
-    default:
-      return;
+axios.interceptors.response.use(
+  (res: AxiosResponse) => {
+    console.log(res);
+    return Promise.resolve(res.data);
+  },
+  (err) => {
+    console.log(err);
+    if (err.response.status == 401) {
+      store.dispatch("LoginOut").then(() => {
+        router.push("/login");
+      });
+    }
+    ElMessage.error(err.response.data.msg || "请求失败");
+    return Promise.reject(err);
   }
-});
+);
 
 export const http: Http = {
   get(url, params) {

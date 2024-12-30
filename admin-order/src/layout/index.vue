@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { ref, reactive, toRefs, onMounted, computed, watch } from "vue";
 import { RouteRecordRaw, useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 let menu = ref([] as any);
 let router = useRouter();
 let route = useRoute();
+const store = useStore();
+const userInfo = computed(() => store.state.userInfo);
 let activeMenu = ref<string>();
 let breadList = ref<RouteRecordRaw[]>([]);
 let key = computed(() => route.fullPath);
@@ -22,6 +25,11 @@ watch(route, (to, from) => {
   )?.path;
   breadList.value = to.matched.filter((item) => item.meta && item.meta.title);
 });
+const handleLogOut = () => {
+  store.dispatch("LoginOut").then(() => {
+    router.push("/login");
+  });
+};
 </script>
 
 <template>
@@ -29,8 +37,9 @@ watch(route, (to, from) => {
     <el-container class="container">
       <el-aside class="aside" width="200px">
         <div class="info">
-          <img src="../assets/1.png" alt="" />
-          <span class="name">HEYIKOU</span>
+          <img :src="userInfo.avatar" alt="" />
+          <span class="name">{{ userInfo.name }}</span>
+          <el-button size="small" @click="handleLogOut">退出登录</el-button>
         </div>
         <el-menu :default-active="activeMenu" class="menu" router>
           <el-menu-item

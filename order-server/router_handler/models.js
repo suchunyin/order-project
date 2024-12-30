@@ -90,6 +90,7 @@ const user = DB.define("user", {
     field: "id",
     autoIncrement: true,
   },
+  account: Sequelize.STRING(100),
   name: Sequelize.STRING(100),
   avatar: Sequelize.STRING(100),
   phone: Sequelize.STRING(300),
@@ -100,4 +101,26 @@ const user = DB.define("user", {
     field: "isDeleted",
   },
 });
-module.exports = { productType, product, order, recommend, user };
+const admin = DB.define("admin", {
+  id: {
+    primaryKey: true,
+    type: Sequelize.INTEGER,
+    field: "id",
+    autoIncrement: true,
+  },
+  account: Sequelize.STRING(100),
+  name: Sequelize.STRING(100),
+  avatar: Sequelize.STRING(100),
+  desc: Sequelize.TEXT,
+  phone: Sequelize.STRING(300),
+  openingTime: Sequelize.TIME,
+  closingTime: Sequelize.TIME,
+  minPriceDelivery: Sequelize.INTEGER,
+  address: Sequelize.TEXT,
+  isDeleted: {
+    type: Sequelize.TINYINT,
+    defaultValue: "0",
+    field: "isDeleted",
+  },
+});
+module.exports = { productType, product, order, recommend, user, admin };

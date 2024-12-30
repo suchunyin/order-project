@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import store from "../store";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "layout",
     component: () => import("@/layout/index.vue"),
-    redirect: "/product/addProduct",
+    redirect: "/home",
     children: [
       {
         path: "/home",
@@ -69,11 +70,31 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  {
+    path: "/login",
+    name: "login",
+    meta: { title: "登录" },
+    component: () => import("@/layout/login.vue"),
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, _from, next) => {
+  document.title = (to.meta.title as string) || "HEYIKOU商家后台管理系统";
+  if (to.path === "/login") {
+    next();
+  } else {
+    const token = store.getters.token;
+    if (!token) {
+      next("/login");
+    } else {
+      next();
+    }
+  }
 });
 
 export default router;

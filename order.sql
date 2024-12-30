@@ -47,10 +47,12 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE
   `user` (
     `id` int NOT NULL AUTO_INCREMENT,
+    `account` varchar(100)  NOT NULL,
     `name` varchar(100) DEFAULT NULL,
     `avatar` varchar(100) DEFAULT NULL,
     `phone` varchar(300) DEFAULT NULL,
     `addressObj` text DEFAULT NULL,
+    `password` varchar(100) DEFAULT '123456',
     `createdAt` datetime DEFAULT CURRENT_TIMESTAMP,
     `updatedAt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `isDeleted` tinyint (1) unsigned zerofill DEFAULT '0',
@@ -58,14 +60,52 @@ CREATE TABLE
   );
 
 INSERT INTO
-  `user` (`id`, `name`, `avatar`, `phone`, `addressObj`)
+  `user` (`id`, `account`, `name`, `avatar`, `phone`, `addressObj`)
 VALUES
   (
     '40001',
+    '13544556622',
     '雅丽',
-    '/user/default.jpg',
+    '/image/user/default.jpg',
     '13544556622',
     '[{"address":"北京市北京市东城区天桥南大街126号","recipientName":"李","recipientGender":"女士","recipientPhone":"19855446622"}]'
+  );
+
+DROP TABLE IF EXISTS `admin`;
+
+CREATE TABLE
+  `admin` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `account` varchar(100)  NOT NULL,
+    `name` varchar(100) DEFAULT NULL,
+    `avatar` varchar(100) DEFAULT NULL,
+    `desc` text DEFAULT NULL,
+    `phone` varchar(300) DEFAULT NULL,
+    `openingTime` time DEFAULT NULL,
+    `closingTime` time DEFAULT NULL,
+    `minPriceDelivery` int DEFAULT NULL,
+    `address` text DEFAULT NULL,
+    `password` varchar(100) DEFAULT '123456',
+    `createdAt` datetime DEFAULT CURRENT_TIMESTAMP,
+    `updatedAt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `isDeleted` tinyint (1) unsigned zerofill DEFAULT '0',
+    PRIMARY KEY (`id`)
+  );
+
+INSERT INTO
+  `admin` (`id`, `account`, `name`, `avatar`, `desc`, `phone`, `openingTime`, `closingTime`, `minPriceDelivery`, `address`)
+VALUES
+  (
+    '40000',
+    'admin',
+    'HEYIKOU商家',
+    '/image/user/admin.png',
+    '本公司创办于2002年，旗下2000家店铺',
+    '020-62244588',
+    '09:00:00',
+    '21:00:00',
+    '20',
+    '北京市北京市东城区天桥南大街126号'
   );
 
 DROP TABLE IF EXISTS `product_type`;
