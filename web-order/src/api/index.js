@@ -4,11 +4,18 @@ const baseUrl = "http://127.0.0.1:3009";
 const apiUrl = baseUrl + "/api";
 
 const register = (data) => {
-  return request({ url: `${apiUrl}/user/register`, data: data, method: "POST" });
+  return request({
+    url: `${apiUrl}/user/register`,
+    data: data,
+    method: "POST",
+  });
 };
 
 const login = (data) => {
   return request({ url: `${apiUrl}/user/login`, data: data, method: "POST" });
+};
+const getRecommendList = () => {
+  return request({ url: `${apiUrl}/recommend/list` });
 };
 const getProductList = () => {
   return request({ url: `${apiUrl}/productType/typeList` });
@@ -35,6 +42,7 @@ const api = {
   getOrderInfo,
   deleteOrder,
   login,
-  register
+  register,
+  getRecommendList,
 };
 export default api;

@@ -13,6 +13,7 @@ const request = (params) => {
             title: res.data.msg || "请求失败",
             icon: "error",
           });
+          if (res.statusCode == 401) store.dispatch("Logout");
           reject(res);
         }
       },

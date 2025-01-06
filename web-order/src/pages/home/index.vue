@@ -8,8 +8,12 @@
       indicator-active-color="#adff2f"
       class="swiper-wrap"
     >
-      <swiper-item v-for="item in list.top" :key="item.id">
-        <image mode="aspectFill" :src="item.cover"></image>
+      <swiper-item v-for="item in list" :key="item.id">
+        <image
+          mode="aspectFill"
+          :src="imageUrl(item.cover)"
+          @click="handleJump(item)"
+        ></image>
       </swiper-item>
     </swiper>
     <view class="operate-wrap">
@@ -23,36 +27,52 @@
       </view>
     </view>
     <view class="bottom-wrap">
-      <view class="item" v-for="item in list.bottom" :key="item.id">
-        <image mode="aspectFill" :src="item.cover"></image>
+      <view class="item" v-for="item in list" :key="item.id">
+        <image
+          mode="aspectFill"
+          :src="imageUrl(item.cover)"
+          @click="handleJump(item)"
+        ></image>
       </view>
     </view>
   </view>
 </template>
 
 <script>
+import { imageUrl } from "@/utils/index";
 export default {
   data() {
     return {
-      list: {
-        top: [
-          { id: "1", cover: "../../static/1.png" },
-          { id: "1", cover: "../../static/1.png" },
-          { id: "1", cover: "../../static/1.png" },
-        ],
-        bottom: [
-          { id: "1", cover: "../../static/2.png" },
-          { id: "1", cover: "../../static/2.png" },
-          { id: "1", cover: "../../static/2.png" },
-        ],
-      },
+      list: [],
+      // list: {
+      //   top: [
+      //     { id: "1", cover: "../../static/1.png" },
+      //     { id: "1", cover: "../../static/1.png" },
+      //     { id: "1", cover: "../../static/1.png" },
+      //   ],
+      //   bottom: [
+      //     { id: "1", cover: "../../static/2.png" },
+      //     { id: "1", cover: "../../static/2.png" },
+      //     { id: "1", cover: "../../static/2.png" },
+      //   ],
+      // },
     };
   },
   methods: {
-    // imageUrl,
+    imageUrl,
     handleClick(type) {
       getApp().globalData.shoppingBag.orderType = type;
       uni.switchTab({ url: "/pages/product/index" });
+    },
+    handleJump(item) {
+      uni.navigateTo({
+        url: `/pages/product/detail?item=${JSON.stringify(item)}`,
+      });
+    },
+    onLoad() {
+      this.$api.getRecommendList().then((res) => {
+        this.list = res.res;
+      });
     },
   },
 };
