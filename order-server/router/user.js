@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 
 router.get("/user/info", async (req, res) => {
   let userinfo = await user.findOne({
-    where: { isDeleted: 0, id: req.query.id },
+    where: { isDeleted: 0, account: req.auth.account, },
     raw: true,
   });
   userinfo.addressObj = JSON.parse(userinfo.addressObj || "[]");
@@ -16,6 +16,43 @@ router.get("/user/info", async (req, res) => {
     code: 200,
     msg: "",
     res: userinfo,
+  });
+});
+router.post("/user/login", async (req, res) => {
+  if ((!req.body.account && !req.body.phone) || !req.body.password) {
+    return res.json({
+      code: 400,
+      msg: "账号或密码不能为空",
+      res: null,
+    });
+  }
+  let params = { password: req.body.password };
+  if (req.body.account) params.account = req.body.account;
+  if (req.body.phone) params.account = req.body.phone;
+  let info = await user.findOne({
+    where: {
+      isDeleted: 0,
+      ...params,
+    },
+    raw: true,
+  });
+  if (!info) {
+    return res.status(400).json({
+      code: 400,
+      msg: "账号或密码错误",
+      res: null,
+    });
+  }
+
+  const token = jwt.sign(
+    { account: info.account, phone: info.phone, id: info.id },
+    process.env.secret_key,
+    { expiresIn: "1h" }
+  );
+  res.json({
+    code: 200,
+    msg: "登录成功",
+    res: { token, info },
   });
 });
 router.post("/admin/login", async (req, res) => {
@@ -68,10 +105,6 @@ router.get("/admin/info", async (req, res) => {
   });
 });
 router.post("/admin/update", async (req, res) => {
-  console.log(req.body);
-  console.log(req.auth.account);
-  
-  
   await admin.update(
     { ...req.body },
     {

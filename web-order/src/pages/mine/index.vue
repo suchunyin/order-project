@@ -1,10 +1,10 @@
 <template>
-  <view class="container">
+  <view v-if="isLogin" class="container">
     <view class="info-wrap">
       <view class="avatar">
-        <image mode="aspectFill" :src="user.avatar"></image>
+        <image mode="aspectFill" :src="imageUrl(userInfo.avatar)"></image>
       </view>
-      <view class="name">{{ user.name }}</view>
+      <view class="name">{{ userInfo.name }}</view>
     </view>
     <view class="btn-wrap">
       <view class="btn" v-for="item in list" :key="item.title">
@@ -13,10 +13,18 @@
       </view>
     </view>
   </view>
+  <not-login-in v-else />
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import NotLoginIn from "@/components/login/notLoginIn.vue";
+import { imageUrl } from "../../utils";
 export default {
+  components: { NotLoginIn },
+  computed: {
+    ...mapGetters(["isLogin", "userInfo"]),
+  },
   data() {
     return {
       user: { avatar: "../../static/icon/wode.png", name: "周杰伦" },
@@ -31,6 +39,9 @@ export default {
         { title: "礼券兑换", icon: "t-icon-liquan" },
       ],
     };
+  },
+  methods: {
+    imageUrl,
   },
 };
 </script>

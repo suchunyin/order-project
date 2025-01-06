@@ -25,7 +25,16 @@ app.use(
       secret: process.env.secret_key,
       algorithms: ["HS256"],
     })
-    .unless({ path: ["/api/admin/login", /^\/image/] })
+    .unless({
+      path: [
+        "/api/admin/login",
+        "/api/user/login",
+        /^\/image/,
+        "/api/product/productList",
+        "/api/productType/typeList",
+        "/api/recommend/list",
+      ],
+    })
 );
 
 // 路由

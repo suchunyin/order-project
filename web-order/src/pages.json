@@ -7,16 +7,16 @@
   },
   "pages": [
     {
-      "path": "pages/product/index",
+      "path": "pages/home/index",
       "style": {
-        "navigationBarTitleText": "点单",
+        "navigationBarTitleText": "首页",
         "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/home/index",
+      "path": "pages/product/index",
       "style": {
-        "navigationBarTitleText": "首页",
+        "navigationBarTitleText": "点单",
         "navigationStyle": "custom"
       }
     },
@@ -31,6 +31,18 @@
       "style": {
         "navigationBarTitleText": "我的",
         "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "components/login/index",
+      "style": {
+        "navigationBarTitleText": "登录"
+      }
+    },
+    {
+      "path": "components/login/register/index",
+      "style": {
+        "navigationBarTitleText": "注册"
       }
     },
     {

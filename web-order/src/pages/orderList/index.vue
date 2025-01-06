@@ -1,5 +1,5 @@
 <template>
-  <scroll-view scroll-y class="container">
+  <scroll-view v-if="isLogin" scroll-y class="container">
     <navigator
       :url="`/pages/orderList/detail?id=${item.id}`"
       class="item"
@@ -25,11 +25,18 @@
       </view>
     </navigator>
   </scroll-view>
+  <not-login-in v-else />
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { imageUrl } from "../../utils";
+import NotLoginIn from "@/components/login/notLoginIn.vue";
 export default {
+  components: { NotLoginIn },
+  computed: {
+    ...mapGetters(["isLogin", "userInfo"]),
+  },
   data() {
     return {
       list: [
@@ -88,13 +95,13 @@ export default {
   methods: {
     imageUrl,
     getOrderList() {
-      this.$api.getOrderList({ id: getApp().globalData.userId }).then((res) => {
+      this.$api.getOrderList({ id: this.userInfo.id }).then((res) => {
         this.list = res.res;
       });
     },
   },
   onShow() {
-    this.getOrderList();
+    if (this.isLogin) this.getOrderList();
   },
 };
 </script>

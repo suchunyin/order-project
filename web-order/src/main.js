@@ -1,15 +1,17 @@
-import Vue from 'vue'
-import App from './App'
-import './uni.promisify.adaptor'
+import Vue from "vue";
+import App from "./App";
+import "./uni.promisify.adaptor";
+import store from "./store/index";
 
-import api from './api/index'
+import api from "./api/index";
 Vue.prototype.$api = api;
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-App.mpType = 'app'
+App.mpType = "app";
 
 const app = new Vue({
-  ...App
-})
-app.$mount()
+  ...App,
+  store,
+});
+app.$mount();

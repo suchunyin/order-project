@@ -3,6 +3,13 @@ import request from "./request";
 const baseUrl = "http://127.0.0.1:3009";
 const apiUrl = baseUrl + "/api";
 
+const register = (data) => {
+  return request({ url: `${apiUrl}/user/register`, data: data, method: "POST" });
+};
+
+const login = (data) => {
+  return request({ url: `${apiUrl}/user/login`, data: data, method: "POST" });
+};
 const getProductList = () => {
   return request({ url: `${apiUrl}/productType/typeList` });
 };
@@ -27,5 +34,7 @@ const api = {
   addOrder,
   getOrderInfo,
   deleteOrder,
+  login,
+  register
 };
 export default api;

@@ -81,8 +81,12 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { imageUrl } from "../../utils";
 export default {
+  computed: {
+    ...mapGetters(["isLogin", "userInfo"]),
+  },
   data() {
     return {
       bag: { list: [] },
@@ -109,17 +113,18 @@ export default {
         dealNum: this.bag.list.length,
         phone: this.phone,
         remark: this.remark,
-        userId: getApp().globalData.userId,
+        userId: this.userInfo.id,
       };
       this.$api.addOrder(data).then((res) => {
         getApp().globalData.shoppingBag.amount = 0;
         getApp().globalData.shoppingBag.list = [];
         uni.showToast({ title: res.msg });
-        uni.redirectTo({url:`/pages/orderList/detail?id=${res.res.id}`});
+        uni.redirectTo({ url: `/pages/orderList/detail?id=${res.res.id}` });
       });
     },
   },
   onLoad() {
+    if (!this.isLogin) uni.redirectTo({ url: "/components/login/index" });
     this.bag = getApp().globalData.shoppingBag;
   },
 };

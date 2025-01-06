@@ -15,7 +15,6 @@ export default {
       amount: 0,
       list: [],
     },
-    userId: 40001, // 用户id
   },
 };
 </script>
